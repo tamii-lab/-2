@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>健康科学クイズ｜第1回目</title>
+
+<meta property="og:title" content="健康科学クイズ｜第1回目">
+<meta property="og:description" content="血糖値・体内時計・自律神経・ω3・腸脳相関を楽しく学べる健康科学クイズ">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tamii-lab.github.io-/">
+<meta property="og:image" content="https://tamii-lab.github.io/-/ogp2.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="健康科学クイズ｜第1回目">
+<meta name="twitter:description" content="血糖値・体内時計・自律神経・ω3・腸脳相関を楽しく学べる健康科学クイズ">
+<meta name="twitter:image" content="https://tamii-lab.github.io/-/ogp2.png">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 14px;
+  font-family: "Yu Gothic", "Hiragino Sans", sans-serif;
+  background: linear-gradient(180deg, #fff1f6, #eef8ff);
+  color: #333;
+}
+
+.container {
+  width: 100%;
+  max-width: 430px;
+  min-height: 92vh;
+  margin: auto;
+  background: #fff;
+  border-radius: 26px;
+  padding: 22px 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.hero-image {
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #e85d8f;
+  margin: 8px 0 6px;
+  line-height: 1.35;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.score {
+  text-align: center;
+  font-size: 15px;
+  background: #fff0f5;
+  padding: 10px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+  font-weight: bold;
+}
+
+.question {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.55;
+  margin: 22px 0 18px;
+}
+
+button {
+  width: 100%;
+  min-height: 58px;
+  margin: 10px 0;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 18px;
+  background: #f5f5f5;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.45;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #ddd;
+}
+
+button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #ddd;
+}
+
+.correct {
+  background: #b9f6ca !important;
+  box-shadow: 0 4px 0 #79c98b !important;
+}
+
+.wrong {
+  background: #ffcdd2 !important;
+  box-shadow: 0 4px 0 #e69aa3 !important;
+}
+
+#result {
+  margin-top: 18px;
+  font-size: 19px;
+  font-weight: bold;
+  text-align: center;
+  color: #e85d8f;
+}
+
+#explain {
+  margin-top: 14px;
+  background: #fff7cc;
+  border-radius: 18px;
+  padding: 15px;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+#nextBtn {
+  background: #e85d8f;
+  color: white;
+  box-shadow: 0 4px 0 #c84272;
+  margin-top: 20px;
+  display: none;
+}
+
+.final {
+  text-align: center;
+  font-size: 22px;
+  line-height: 1.7;
+  margin: 30px 0;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <img src="ogp2.png" class="hero-image" alt="健康科学クイズ">
+
+  <h1>健康科学クイズ<br>第1回目</h1>
+  <div class="subtitle">Threads投稿で学ぶ<br>“なんとなく不調”のしくみ</div>
+
+  <div class="score" id="score">スコア：0 / 0</div>
+  <div class="question" id="question"></div>
+  <div id="answers"></div>
+  <div id="result"></div>
+  <div id="explain"></div>
+  <button id="nextBtn" onclick="nextQuestion()">次の問題へ</button>
+
+</div>
+
+<script>
+const quiz = [
+  {
+    q: "「7時間寝たのにだるい…」原因として大事なのは？",
+    a: ["睡眠時間だけ", "睡眠の不規則さ", "枕の高さ", "夢の内容"],
+    correct: 1,
+    explain: "大事なのは『何時間寝たか』だけでなく、毎日いつ寝て、いつ光を浴びるか。体内時計のズレが不調に関係します。"
+  },
+  {
+    q: "体内時計の“本社”として説明される脳の部位は？",
+    a: ["小脳", "視交叉上核", "海馬", "扁桃体"],
+    correct: 1,
+    explain: "視交叉上核は、朝の光を手がかりに全身のリズムを整える司令塔のような存在です。"
+  },
+  {
+    q: "食後に甘いものが欲しくなる現象で関係するのは？",
+    a: ["血糖値の急上昇と急降下", "骨密度", "肺活量", "視力"],
+    correct: 0,
+    explain: "血糖値が急に上がって、その後下がると、脳がさらに糖を欲しがることがあります。"
+  },
+  {
+    q: "深呼吸が落ち着きに関係する理由は？",
+    a: ["筋肉が増えるから", "自律神経に働きかけるから", "胃が大きくなるから", "体温が必ず下がるから"],
+    correct: 1,
+    explain: "呼吸は自律神経にアプローチできる手段のひとつ。心拍や緊張感にも関係します。"
+  },
+  {
+    q: "魚の油、DHA・EPAが壊れやすい理由は？",
+    a: ["水に溶けやすいから", "二重結合が多く酸化しやすいから", "甘いから", "硬い脂だから"],
+    correct: 1,
+    explain: "DHAやEPAは不飽和度が高く、酸化しやすい油です。健康に良い油ほど扱い方が大事です。"
+  },
+  {
+    q: "ω3の“3”は何を表している？",
+    a: ["カロリーが3倍", "メチル末端から3番目に最初の二重結合がある", "3時間で吸収される", "3種類の魚に多い"],
+    correct: 1,
+    explain: "ω3とは、メチル末端から数えて3番目の位置に最初の二重結合がある脂肪酸のことです。"
+  },
+  {
+    q: "休肝日の話で重要な物質として出てきたのは？",
+    a: ["アセトアルデヒド", "コラーゲン", "メラトニン", "乳酸菌"],
+    correct: 0,
+    explain: "アルコール代謝ではアセトアルデヒドが関係します。二日酔いや体への負担を考えるうえで重要です。"
+  },
+  {
+    q: "腸内環境とうつ・不調の話で関係しやすい考え方は？",
+    a: ["腸と脳は無関係", "腸脳相関", "骨盤だけの問題", "目の疲れだけ"],
+    correct: 1,
+    explain: "腸と脳は神経・免疫・代謝などを通じて影響し合うと考えられています。"
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+  answered = false;
+  document.getElementById("result").textContent = "";
+  document.getElementById("explain").textContent = "";
+  document.getElementById("nextBtn").style.display = "none";
+
+  const q = quiz[current];
+  document.getElementById("question").textContent = `Q${current + 1}. ${q.q}`;
+  document.getElementById("answers").innerHTML = "";
+
+  q.a.forEach((ans, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = ans;
+    btn.onclick = () => checkAnswer(btn, index);
+    document.getElementById("answers").appendChild(btn);
+  });
+
+  updateScore();
+}
+
+function checkAnswer(button, index) {
+  if (answered) return;
+  answered = true;
+
+  const q = quiz[current];
+  const answerButtons = document.querySelectorAll("#answers button");
+
+  answerButtons.forEach((btn, i) => {
+    if (i === q.correct) btn.classList.add("correct");
+  });
+
+  if (index === q.correct) {
+    score++;
+    document.getElementById("result").textContent = "正解！さすがです✨";
+  } else {
+    button.classList.add("wrong");
+    document.getElementById("result").textContent = "惜しい！でもここ大事です。";
+  }
+
+  document.getElementById("explain").textContent = q.explain;
+  document.getElementById("nextBtn").style.display = "block";
+  updateScore();
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= quiz.length) {
+    showFinal();
+  } else {
+    loadQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function updateScore() {
+  document.getElementById("score").textContent =
+    `スコア：${score} / ${current + (answered ? 1 : 0)}`;
+}
+
+function showFinal() {
+  let message = "";
+  if (score === quiz.length) {
+    message = "満点！<br>健康科学マスターです🎉";
+  } else if (score >= 6) {
+    message = "かなり優秀！<br>仕組みで理解できています✨";
+  } else if (score >= 4) {
+    message = "いい感じ！<br>投稿を読むほど強くなります。";
+  } else {
+    message = "ここから伸びます。<br>体内時計・血糖値・油から！";
+  }
+
+  document.querySelector(".container").innerHTML = `
+    <img src="ogp2.png" class="hero-image" alt="健康科学クイズ">
+    <h1>結果発表</h1>
+    <div class="final">${score} / ${quiz.length} 問正解<br><br>${message}</div>
+    <button onclick="location.reload()">もう一度挑戦する</button>
+  `;
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
